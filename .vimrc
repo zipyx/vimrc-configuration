@@ -5,6 +5,7 @@ filetype plugin on
 " -- SET CONFIGURATIONS
 " #######################################
 
+set exrc
 set encoding=utf-8
 set nocompatible
 set noerrorbells
@@ -23,7 +24,7 @@ set wildmenu
 set autoindent
 
 " ------- COLORS
-" set background=dark
+set background=dark
 
 " #######################################
 " -- CUSTOM PLUGIN SETTINGS
@@ -33,9 +34,9 @@ set autoindent
 set hidden
 set nobackup
 set nowritebackup
-set cmdheight=3
 set updatetime=300
-set shortmess+=c
+set cmdheight=2
+set shortmess=at
 
 " ------- COLOR SCHEMES
 " bog
@@ -87,7 +88,7 @@ set shortmess+=c
 " xoria256
 " zenburn
 " zenesque
-colorscheme darkblue
+colorscheme gruvbox
 
 " #######################################
 " -- CUSTOM KEY BINDINGS
@@ -96,6 +97,7 @@ colorscheme darkblue
 " ------- LEADER KEYS
 inoremap jj <Esc>
 let mapleader=" "
+nnoremap <silent><leader>q :q<CR>
 
 " ------- CUSTOM
 nnoremap <silent>term :terminal<CR>
@@ -105,8 +107,8 @@ nnoremap <silent><C-L> :vertical resize +5<CR>
 nnoremap <silent><C-H> :vertical resize -5<CR>
 nnoremap <silent><C-K> :resize +5<CR>
 nnoremap <silent><C-J> :resize -5<CR>
-nnoremap <silent><leader>zi <C-W>_ \| <C-W>\|
-nnoremap <silent><leader>zo <C-W>=
+nnoremap <silent><leader>zi <C-W>_ \| <C-W>\|<CR>
+nnoremap <silent><leader>zo <C-W>=<CR>
 
 " + Imitate DWM windows but with CTRL
 nnoremap <silent><S-L> <C-W><C-L>
@@ -119,13 +121,13 @@ nnoremap <silent>sp :sp<CR>
 nnoremap <silent>vsp :vsp<CR>
 
 " ------- TABS
-nnoremap th :tabfirst<CR>
-nnoremap tj :tabnext<CR>
-nnoremap tk :tabprev<CR>
-nnoremap tl :tablast<CR>
-nnoremap tn :tabnew<CR>
-nnoremap tF :tabm 0<CR>
-nnoremap tL :tabm<CR>
+nnoremap <silent>th :tabfirst<CR>
+nnoremap <silent>tj :tabnext<CR>
+nnoremap <silent>tk :tabprev<CR>
+nnoremap <silent>tl :tablast<CR>
+nnoremap <silent>tn :tabnew<CR>
+nnoremap <silent>tF :tabm 0<CR>
+nnoremap <silent>tL :tabm<CR>
 
 " ------- BUFFERS
 nnoremap <silent>bj :bn<CR>
@@ -140,24 +142,30 @@ omap ;; <Plug>Commentary
 nmap ;; <Plug>CommentaryLine
 
 " ------- FZF
-nnoremap <silent><leader>fls :Files<CR>
-nnoremap <silent><leader>fla :Ag<CR>
-nnoremap <silent><leader>fb :Buffers<CR>
-nnoremap <silent><leader>col :Colors<CR>
-nnoremap <silent><leader>fbl :Lines<CR>
-nnoremap <silent><leader>fli :BLines<CR>
-nnoremap <silent><leader>gla :Commits<CR>
-nnoremap <silent><leader>gli :BCommits<CR>
+nnoremap <silent>fls :Files<CR>
+nnoremap <silent>fla :Ag<CR>
+nnoremap <silent>flb :Lines<CR>
+nnoremap <silent>fli :BLines<CR>
+nnoremap <silent>gla :Commits<CR>
+nnoremap <silent>gli :BCommits<CR>
 nnoremap <silent>maps :Maps<CR>
-nnoremap <silent>cmd :Commands<CR>
+nnoremap <silent>cmds :Commands<CR>
+nnoremap <silent><leader>lb :Buffers<CR>
+nnoremap <silent><leader>col :Colors<CR>
 
-" ------- GIT
-nnoremap <silent><leader>gls :GV<CR>
+" ------- GIT VIM FUGITIVE
+nnoremap <silent><leader>sh :diffget //3<CR>
+nnoremap <silent><leader>sl :diffget //2<CR>
+nnoremap <silent><leader>gs :G<CR>
+nnoremap <silent>cmit :Git commit<CR>
+nnoremap <silent>psh :Git push<CR>
+nnoremap <silent>add :Git add<CR>
 
 " ------- GIT GUTTER
 nnoremap <silent>glt :GitGutterToggle<CR>
 nnoremap <silent>glj :GitGutterSignsToggle<CR>
 nnoremap <silent>glh :GitGutterLineHighlightsToggle<CR>
+let g:gitgutter_highlight_lines = 1
 
 " ------- GIT CONNECT TO GITHUB/GITLAB
 " <leader>gh --> Default key mapping for blob view
@@ -200,6 +208,11 @@ Plug 'scrooloose/nerdtree'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 
+" ------- TERRAFORM
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
+
 " ------- COLORS/THEMES
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -209,14 +222,16 @@ Plug 'flazz/vim-colorschemes'
 " Info : Run python3 install.py --all in directory
 " --> Install dependies along the way
 Plug 'valloric/youcompleteme'
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 
-" ------- GIT RELATED
+" ------- GIT
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+
+" ------- GIT CONNECT TO WEB
 Plug 'ruanyl/vim-gh-line'
 
-" ------- COMMENTS
+" ------- COMMENT OUT LINES
 Plug 'tpope/vim-commentary'
 
 " ------- FINDING FILES
