@@ -97,8 +97,7 @@ colorscheme gruvbox
 " ------- LEADER KEYS
 inoremap jj <Esc>
 let mapleader=" "
-nnoremap <silent><S-A> :q<CR>
-nnoremap <silent><S-Q> :quitall<CR>
+nnoremap <silent><leader>q :q<CR>
 
 " ------- CUSTOM
 nnoremap <silent>term :terminal<CR>
@@ -137,10 +136,10 @@ nnoremap <silent>bk :bp<CR>
 nnoremap <silent>bd :bd<CR>
 
 " ------- COMMENTARY
-xmap <silent><leader>;; <Plug>Commentary
-nmap <silent><leader>;; <Plug>Commentary
-omap <silent><leader>;; <Plug>Commentary
-nmap <silent><leader>;; <Plug>CommentaryLine
+xmap ;; <Plug>Commentary
+nmap ;; <Plug>Commentary
+omap ;; <Plug>Commentary
+nmap ;; <Plug>CommentaryLine
 
 " ------- FZF
 nnoremap <silent>fls :Files<CR>
@@ -161,8 +160,6 @@ nnoremap <silent><leader>gs :G<CR>
 nnoremap <silent>cmit :Git commit<CR>
 nnoremap <silent>psh :Git push<CR>
 nnoremap <silent>add :Git add<CR>
-nnoremap <silent>diff :Git difftool<CR>
-let g:gitlab_api_keys = {'gitlab.com': ''}
 
 " ------- GIT GUTTER
 nnoremap <silent>glt :GitGutterToggle<CR>
@@ -208,7 +205,8 @@ Plug 'preservim/NERDTree'
 Plug 'scrooloose/nerdtree'
 
 " ------- VIM ORG-MODE
-Plug 'dhruvasagar/vim-dotoo'
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
 
 " ------- TERRAFORM
 Plug 'hashivim/vim-terraform'
@@ -232,7 +230,6 @@ Plug 'tpope/vim-fugitive'
 
 " ------- GIT CONNECT TO WEB
 Plug 'ruanyl/vim-gh-line'
-Plug 'shumphrey/fugitive-gitlab.vim'
 
 " ------- COMMENT OUT LINES
 Plug 'tpope/vim-commentary'
