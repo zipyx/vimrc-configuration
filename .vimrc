@@ -320,7 +320,7 @@ nnoremap <silent>psh :Git push<CR>
 nnoremap <silent>add :Git add<CR>
 nnoremap <silent>rev :Git revert<CR>
 nnoremap <silent>diff :Git difftool<CR>
-let g:gitlab_api_keys = {'gitlab.com': 'glpat-98pYrJDmUiVGxXkHjzrc'}
+let g:gitlab_api_keys = {'gitlab.com': ''}
 
 " ------- GIT GUTTER
 nnoremap <silent>glt :GitGutterToggle<CR>
