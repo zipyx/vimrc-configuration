@@ -88,8 +88,11 @@ set shortmess=at
 " xoria256
 " zenburn
 " zenesque
-colorscheme gruvbox
-
+if has ('nvim')
+	colorscheme molokai
+else 
+	colorscheme gruvbox
+endif
 " #######################################
 " -- CUSTOM KEY BINDINGS
 " #######################################
@@ -116,6 +119,31 @@ nnoremap <silent><S-H> <C-W><C-H>
 nnoremap <silent><S-J> <C-W><C-J>
 nnoremap <silent><S-K> <C-W><C-K>
 
+" ------- FLOATERM
+nnoremap <silent>f;n :FloatermNew<CR>
+tnoremap <silent>f;n <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent>f;j :FloatermPrev<CR>
+tnoremap <silent>f;j <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent>f;k :FloatermNext<CR>
+tnoremap <silent>f;k <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent>f;a :FloatermToggle<CR>
+tnoremap <silent>f;a <C-\><C-n>:FloatermToggle<CR>
+nnoremap <silent>f;b :%FloatermSend<CR>
+tnoremap <silent>f;b <C-\><C-n>:%FloatermSend<CR>
+nnoremap <silent>f;d :FloatermKill<CR>
+tnoremap <silent>f;d <C-\><C-n>:FloatermKill<CR>
+nnoremap <silent>f;h :FloatermHide<CR>
+tnoremap <silent>f;h <C-\><C-n>:FloatermHide<CR>
+nnoremap <silent>f;s :FloatermShow<CR>
+tnoremap <silent>f;s <C-\><C-n>:FloatermShow<CR>
+nnoremap <silent>f;u :FloatermUpdate<CR>
+tnoremap <silent>f;u <C-\><C-n>:FloatermUpdate<CR>
+
+" default = 0.6
+let g:floaterm_width = 0.7
+" default = 0.6
+let g:floaterm_height = 0.8
+
 " + Split windows vertical/horizontal
 nnoremap <silent>sp :sp<CR>
 nnoremap <silent>vsp :vsp<CR>
@@ -141,12 +169,24 @@ nmap <silent><leader>;; <Plug>Commentary
 omap <silent><leader>;; <Plug>Commentary
 nmap <silent><leader>;; <Plug>CommentaryLine
 
-" ------- NOTE TAKING / VIM NOTES
-vmap <silent><leader>ns :NoteFromSelectedText<CR>
-nnoremap <silent><leader>ns :Note<CR>
-nnoremap <silent><leader>nd :DeleteNote<CR>
-nnoremap <silent><leader>nr :RecentNotes<CR>
-nnoremap <silent><leader>nf :SearchNotes 
+" ------- NOTE TAKING / VIM NOTES / SCRATCH
+nnoremap <silent>s;n :Scratch<CR>
+nnoremap <silent>s;i :ScratchInsert<CR>
+nnoremap <silent>s;p :ScratchPreview<CR>
+nnoremap <silent>s;s :ScratchSelection<CR>
+
+" ------- FILES / CLIPBOARD
+" copies filepath to clipboard by pressing yf
+:nnoremap <silent> yf :let @+=expand('%:p')<CR>
+
+" " copies pwd to clipboard: command yd
+:nnoremap <silent> yd :let @+=expand('%:p:h')<CR>" Vim jump to the last
+" position when reopening a file
+"
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
 
 " ------- NOTE TAKING / VIMWIKI
 let g:vimwiki_list = [{'path': '~/vimwiki/',
@@ -311,16 +351,20 @@ nnoremap <silent>cmds :Commands<CR>
 nnoremap <silent><leader>lb :Buffers<CR>
 nnoremap <silent><leader>col :Colors<CR>
 
+" ------- REGISTER PEEK
+let g:peekup_open = 'flr'
+let g:peekup_paste_before = '<leader>P'
+let g:peekup_paste_after = '<leader>p'
+
 " ------- GIT VIM FUGITIVE
 nnoremap <silent><leader>sh :diffget //3<CR>
 nnoremap <silent><leader>sl :diffget //2<CR>
-nnoremap <silent><leader>gs :G<CR>
-nnoremap <silent>cmit :Git commit<CR>
-nnoremap <silent>psh :Git push<CR>
-nnoremap <silent>add :Git add<CR>
-nnoremap <silent>rev :Git revert<CR>
-nnoremap <silent>diff :Git difftool<CR>
-let g:gitlab_api_keys = {'gitlab.com': ''}
+nnoremap <silent>g;s :G<CR>
+nnoremap <silent>g;c :Git commit<CR>
+nnoremap <silent>g;p :Git push<CR>
+nnoremap <silent>g;a :Git add<CR>
+nnoremap <silent>g;r :Git revert<CR>
+nnoremap <silent>g;d :Git difftool<CR>
 
 " ------- GIT GUTTER
 nnoremap <silent>glt :GitGutterToggle<CR>
@@ -364,11 +408,12 @@ nnoremap <leader>jan :YcmCompleter GoToDeclaration<CR>
 call plug#begin()
 Plug 'preservim/NERDTree'
 Plug 'scrooloose/nerdtree'
+Plug 'psliwka/vim-smoothie'
+Plug 'gennaro-tedesco/nvim-peekup'
+Plug 'mtth/scratch.vim'
 
 " ------- VIM ORG-MODE
 Plug 'tpope/vim-surround'
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
 Plug 'vimwiki/vimwiki'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
@@ -401,4 +446,23 @@ Plug 'tpope/vim-commentary'
 " ------- FINDING FILES
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" ------- NVIM STUFF
+if has ('nvim')
+	
+	" ------- MAKE LANGUAGES STAND OUT
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
+	" ------- LANGUAGE SYNTAX SUPPORT
+	Plug 'sheerun/vim-polyglot'
+	
+	" ------- FASF LANGUAGE SUPPORT
+	Plug 'ms-jpq/coq_nvim'
+	Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
+	" ------- FLOATING TERM
+	Plug 'voldikss/vim-floaterm'
+endif
+
 call plug#end()
