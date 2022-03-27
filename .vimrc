@@ -98,8 +98,9 @@ endif
 " #######################################
 
 " ------- LEADER KEYS
-inoremap jj <Esc>
 let mapleader=" "
+inoremap jj <Esc>
+nnoremap <silent><leader>q :q<CR>
 nnoremap <silent><S-Q> :quitall<CR>
 
 " ------- CUSTOM
@@ -128,7 +129,7 @@ nnoremap <silent>f;k :FloatermNext<CR>
 tnoremap <silent>f;k <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent>f;a :FloatermToggle<CR>
 tnoremap <silent>f;a <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent>f;b :%FloatermSend<CR>
+nnoremap <silent>f;b :%FloatermSend --name=%<CR>
 tnoremap <silent>f;b <C-\><C-n>:%FloatermSend<CR>
 nnoremap <silent>f;d :FloatermKill<CR>
 tnoremap <silent>f;d <C-\><C-n>:FloatermKill<CR>
@@ -139,12 +140,33 @@ tnoremap <silent>f;s <C-\><C-n>:FloatermShow<CR>
 nnoremap <silent>f;u :FloatermUpdate<CR>
 tnoremap <silent>f;u <C-\><C-n>:FloatermUpdate<CR>
 
+" + Compile Languages
+if has ('nvim')
+	nnoremap <silent>f;v :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 nvim<CR>
+	nnoremap <silent>f;e :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 nvim ~/.config/nvim/init.vim<CR>
+else
+	nnoremap <silent>f;v :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 vim<CR>
+	nnoremap <silent>f;e :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 vim ~/.vimrc<CR>
+endif
+
+nnoremap <silent>f;g :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go run %<CR>
+nnoremap <silent>f;ga :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go run .<CR>
+nnoremap <silent>f;gi :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go run %
+nnoremap <silent>f;gb :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go build %<CR>
+nnoremap <silent>f;cp :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=cppcompiler --autoclose=0 gcc % -o %< && ./%<CR>
+
 " default = 0.6
 let g:floaterm_width = 0.7
 " default = 0.6
 let g:floaterm_height = 0.8
 
-" + Split windows vertical/horizontal
+" ------- MOVE LINES
+nnoremap <C-u> :m .-2<CR>==
+nnoremap <C-d> :m .+1<CR>==
+vnoremap <C-d> :m '>+1<CR>gv=gv
+vnoremap <C-u> :m '<-2<CR>gv=gv
+
+" ------- SPLIT WINDOWS (SPLIT|VSPLIT)
 nnoremap <silent>sp :sp<CR>
 nnoremap <silent>vsp :vsp<CR>
 
@@ -406,11 +428,18 @@ nnoremap <leader>jan :YcmCompleter GoToDeclaration<CR>
 " #######################################
 
 call plug#begin()
+" ------- VIM TREE
 Plug 'preservim/NERDTree'
 Plug 'scrooloose/nerdtree'
-Plug 'psliwka/vim-smoothie'
-Plug 'gennaro-tedesco/nvim-peekup'
-Plug 'mtth/scratch.vim'
+
+" ------- NVIM TREE
+Plug 'kyazdani42/nvim-web-devicons' " Dev Icons
+Plug 'kyazdani42/nvim-tree.lua'
+
+" ------- OTHER USEFUL TOOLS
+Plug 'psliwka/vim-smoothie' " Scrolling
+Plug 'gennaro-tedesco/nvim-peekup' " List Registers
+Plug 'mtth/scratch.vim' "Scratch Pad for Notes
 
 " ------- VIM ORG-MODE
 Plug 'tpope/vim-surround'
@@ -442,6 +471,7 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 
 " ------- COMMENT OUT LINES
 Plug 'tpope/vim-commentary'
+Plug 'tmsvg/pear-tree'
 
 " ------- FINDING FILES
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
