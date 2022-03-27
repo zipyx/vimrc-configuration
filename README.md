@@ -12,4 +12,12 @@ Intuitive Vim Configuration (vimrc)
   - `:source %`
   - `:PlugInstall`
 
-That should be it.
+# init.vim (Neo)vim config
+
+## Arch Linux
+- Run command on terminal `sudo pacman -Syu neovim`
+- create a symlink between your `.vimrc` and the `init.vim` configs like so `ln -s ~/.vimrc ~/.config/nvim/init.vim`
+- or create 2 separate configs for `vim` and `neovim`
+- `:source %`
+- `:PlugInstall`
+- `:PlugUpdate`
