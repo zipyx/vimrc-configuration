@@ -1,7 +1,7 @@
-# vimrc-configuration
+# Vim Conifguration (vimrc)
 Intuitive Vim Configuration (vimrc)
 
-## Requirements
+### Requirements
 - Must have Vim 8.0+
 - Install preferred plugin manager [Quick Guide](https://opensource.com/article/20/2/how-install-vim-plugins)
   - My easy to install preferred plugin manager -> `curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -12,9 +12,10 @@ Intuitive Vim Configuration (vimrc)
   - `:source %`
   - `:PlugInstall`
 
-# init.vim (Neo)vim config
+# Neovim Configuration (init.vim)
+Intuitive Neovim Configuration (init.vim)
 
-## Arch Linux
+### Arch Linux
 - Run command on terminal `sudo pacman -Syu neovim`
 - create a symlink between your `.vimrc` and the `init.vim` configs like so `ln -s ~/.vimrc ~/.config/nvim/init.vim`
 - or create 2 separate configs for `vim` and `neovim`
