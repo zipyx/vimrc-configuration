@@ -89,7 +89,7 @@ set shortmess=at
 " zenburn
 " zenesque
 if has ('nvim')
-	colorscheme molokai
+	colorscheme gruvbox
 else 
 	colorscheme gruvbox
 endif
@@ -105,20 +105,32 @@ nnoremap <silent><S-Q> :quitall<CR>
 
 " ------- CUSTOM
 nnoremap <silent>term :terminal<CR>
+nnoremap <silent>vterm :vsp terminal<CR>
 
-" ------- WINDOWS
+" ------- AUTOCMD
+" auto VimEnter * NERDTreeToggle
+
+" ------- TAGBAR
+let g:tagbar_ctags_bin = "/usr/bin/ctags"
+nmap t;t :TagbarToggle<CR>
+
+" ------- WINDOWS / ZOOM
 nnoremap <silent><C-L> :vertical resize +5<CR>
 nnoremap <silent><C-H> :vertical resize -5<CR>
 nnoremap <silent><C-K> :resize +5<CR>
 nnoremap <silent><C-J> :resize -5<CR>
-nnoremap <silent><leader>zi <C-W>_ \| <C-W>\|<CR>
-nnoremap <silent><leader>zo <C-W>=<CR>
+nnoremap <silent>zi <C-W>_ \| <C-W>\|<CR>
+nnoremap <silent>zo <C-W>=<CR>
 
 " + Imitate DWM windows but with CTRL
 nnoremap <silent><S-L> <C-W><C-L>
 nnoremap <silent><S-H> <C-W><C-H>
 nnoremap <silent><S-J> <C-W><C-J>
 nnoremap <silent><S-K> <C-W><C-K>
+
+" + Exit Terminal mode
+tnoremap <silent>t;w <C-\><C-n>
+nnoremap <silent>t;w <C-W><C-W>
 
 " ------- FLOATERM
 nnoremap <silent>f;n :FloatermNew<CR>
@@ -128,6 +140,7 @@ tnoremap <silent>f;j <C-\><C-n>:FloatermPrev<CR>
 nnoremap <silent>f;k :FloatermNext<CR>
 tnoremap <silent>f;k <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent>f;a :FloatermToggle<CR>
+vnoremap <silent>f;a :FloatermToggle<CR>
 tnoremap <silent>f;a <C-\><C-n>:FloatermToggle<CR>
 nnoremap <silent>f;b :%FloatermSend --name=%<CR>
 tnoremap <silent>f;b <C-\><C-n>:%FloatermSend<CR>
@@ -144,11 +157,14 @@ tnoremap <silent>f;u <C-\><C-n>:FloatermUpdate<CR>
 if has ('nvim')
 	nnoremap <silent>f;v :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 nvim<CR>
 	nnoremap <silent>f;e :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 nvim ~/.config/nvim/init.vim<CR>
+	tnoremap <silent>f;e :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 nvim ~/.config/nvim/init.vim<CR>
 else
 	nnoremap <silent>f;v :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 vim<CR>
 	nnoremap <silent>f;e :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 vim ~/.vimrc<CR>
+	tnoremap <silent>f;e :FloatermNew --width=0.7 --height=0.8 --wintype=float --name=gocompiler --autoclose=0 vim ~/.vimrc<CR>
 endif
 
+nnoremap <silent>f;t :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go test<CR>
 nnoremap <silent>f;g :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go run %<CR>
 nnoremap <silent>f;ga :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go run .<CR>
 nnoremap <silent>f;gi :FloatermNew --width=0.6 --height=0.6 --wintype=float --name=gocompiler --autoclose=0 go run %
@@ -172,12 +188,15 @@ nnoremap <silent>vsp :vsp<CR>
 
 " ------- TABS
 nnoremap <silent>th :tabfirst<CR>
+nnoremap <silent>tD :tabclose<CR>
 nnoremap <silent>tj :tabnext<CR>
 nnoremap <silent>tk :tabprev<CR>
 nnoremap <silent>tl :tablast<CR>
 nnoremap <silent>tn :tabnew<CR>
 nnoremap <silent>tF :tabm 0<CR>
 nnoremap <silent>tL :tabm<CR>
+tnoremap <silent>tj <C-W><C-W>tj<CR>
+tnoremap <silent>tk <C-W><C-W>tk<CR>
 
 " ------- BUFFERS
 nnoremap <silent>bj :bn<CR>
@@ -368,12 +387,22 @@ nnoremap <silent>flb :Lines<CR>
 nnoremap <silent>fli :BLines<CR>
 nnoremap <silent>gla :Commits<CR>
 nnoremap <silent>gli :BCommits<CR>
-nnoremap <silent>maps :Maps<CR>
-nnoremap <silent>cmds :Commands<CR>
+nnoremap <silent>map :Maps<CR>
+nnoremap <silent>cmd :Commands<CR>
 nnoremap <silent><leader>lb :Buffers<CR>
 nnoremap <silent><leader>col :Colors<CR>
 
-" ------- REGISTER PEEK
+" ------- FZF GIT 
+nmap <Leader>g [fzf-p]
+xmap <Leader>g [fzf-p]
+nnoremap <silent> [fzf-p]p     :<C-u>FzfPreviewFromResourcesRpc project_mru git<CR>
+" nnoremap <silent> [fzf-p]gs    :<C-u>FzfPreviewGitStatusRpc<CR>
+" nnoremap <silent> [fzf-p]ga    :<C-u>FzfPreviewGitActionsRpc<CR>
+nnoremap <silent> [fzf-p]t     :<C-u>FzfPreviewBufferTagsRpc<CR>
+nnoremap <silent> [fzf-p]q     :<C-u>FzfPreviewQuickFixRpc<CR>
+
+
+" ------- REGISTERS PEEK
 let g:peekup_open = 'flr'
 let g:peekup_paste_before = '<leader>P'
 let g:peekup_paste_after = '<leader>p'
@@ -384,9 +413,12 @@ nnoremap <silent><leader>sl :diffget //2<CR>
 nnoremap <silent>g;s :G<CR>
 nnoremap <silent>g;c :Git commit<CR>
 nnoremap <silent>g;p :Git push<CR>
-nnoremap <silent>g;a :Git add<CR>
-nnoremap <silent>g;r :Git revert<CR>
-nnoremap <silent>g;d :Git difftool<CR>
+" nnoremap <silent>g;a :Git add<CR>
+" nnoremap <silent>g;r :Git revert<CR>
+" nnoremap <silent>g;d :Git difftool<CR>
+nnoremap <silent>g;b :FzfPreviewGitBranchesRpc<CR>
+nnoremap <silent>g;S :<C-u>FzfPreviewGitStatusRpc<CR>
+nnoremap <silent>g;a :<C-u>FzfPreviewGitActionsRpc<CR>
 
 " ------- GIT GUTTER
 nnoremap <silent>glt :GitGutterToggle<CR>
@@ -408,7 +440,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" ------- NERDTREE
+" ------- NERDTREE / NVIMTREE
 nnoremap <silent><leader>pt :NERDTreeToggle<CR>
 nnoremap <silent><leader>pv :NERDTreeFind<CR>
 let NERDTreeShowHidden=1
@@ -431,10 +463,6 @@ call plug#begin()
 " ------- VIM TREE
 Plug 'preservim/NERDTree'
 Plug 'scrooloose/nerdtree'
-
-" ------- NVIM TREE
-Plug 'kyazdani42/nvim-web-devicons' " Dev Icons
-Plug 'kyazdani42/nvim-tree.lua'
 
 " ------- OTHER USEFUL TOOLS
 Plug 'psliwka/vim-smoothie' " Scrolling
@@ -473,9 +501,14 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tmsvg/pear-tree'
 
-" ------- FINDING FILES
+" ------- FINDING FILES FZF
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
+Plug 'voldikss/vim-floaterm'
+
+" ------- TAGS
+Plug 'majutsushi/tagbar'
 
 " ------- NVIM STUFF
 if has ('nvim')
