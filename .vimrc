@@ -222,7 +222,7 @@ nmap <silent><leader>;; <Plug>CommentaryLine
 " ------- NOTE TAKING / VIM NOTES / SCRATCH
 nnoremap <silent>s;n :Scratch<CR>
 nnoremap <silent>s;i :ScratchInsert<CR>
-nnoremap <silent>s;p :ScratchPreview<CR>
+nnoremap <silent>s;a :ScratchPreview<CR>
 nnoremap <silent>s;s :ScratchSelection<CR>
 
 " ------- FILES / CLIPBOARD
@@ -430,7 +430,7 @@ nnoremap <silent>g;a :<C-u>FzfPreviewGitActionsRpc<CR>
 nnoremap <silent>glt :GitGutterToggle<CR>
 nnoremap <silent>glj :GitGutterSignsToggle<CR>
 nnoremap <silent>glh :GitGutterLineHighlightsToggle<CR>
-let g:gitgutter_highlight_lines = 1
+" let g:gitgutter_highlight_lines = 1
 
 " ------- GIT CONNECT TO GITHUB/GITLAB
 " <leader>gh --> Default key mapping for blob view
@@ -546,7 +546,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>f;ip  <Plug>(coc-fix-current)
 
 " Run the Code Lens action on the current line.
 nmap <leader>cl  <Plug>(coc-codelens-action)
@@ -612,6 +612,8 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " ------- MAIL
 let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
+source ~/.cache/calendar.vim/credentials.vim
+nnoremap <silent><leader>uc :Calendar<CR>
 
 " ------- EASY ALIGN
 " Start interactive EasyAlign in visual mode (e.g. vipga)
