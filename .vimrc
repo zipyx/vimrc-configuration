@@ -618,9 +618,14 @@ nnoremap <silent><leader>uc :Calendar<CR>
 " ------- EASY ALIGN
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" ------- HTTP REQUESTS
+nmap <silent><leader>ur <Plug>RestNvim
+nmap <silent><leader>urp <Plug>RestNvimPreview
+nmap <silent><leader>url <Plug>RestNvimLast
+
 
 " #######################################
 " -- PLUGINS
@@ -693,6 +698,10 @@ if has ('nvim')
 	" ------- MAKE LANGUAGES STAND OUT
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
+	" ------- HTTP REQUESTS
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'NTBBloodbath/rest.nvim'
 
 	" ------- LANGUAGE SYNTAX SUPPORT
 	Plug 'sheerun/vim-polyglot'
