@@ -22,3 +22,6 @@ Intuitive Neovim Configuration (init.vim)
 - `:source %`
 - `:PlugInstall`
 - `:PlugUpdate`
+
+### Note
+This will also be added to a wiki for conjoint documentation
